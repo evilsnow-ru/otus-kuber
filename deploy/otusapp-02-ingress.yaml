@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: otusapp-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /health
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+  - http:
+      paths:
+        - path: /health
+          pathType: Prefix
+          backend:
+            service:
+              name: otusapp-service
+              port:
+                number: 8000

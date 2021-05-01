@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: otusapp-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: otusapp
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: otusapp
+    spec:
+      containers:
+        - name: otusapp
+          image: "evilsnow/otus:1.0.0"
+          ports:
+            - containerPort: 8000
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 1
+            periodSeconds: 1
+            failureThreshold: 5
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 1
+            periodSeconds: 1
+            failureThreshold: 5
