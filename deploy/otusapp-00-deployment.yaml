@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: otusapp
-          image: "evilsnow/otus:1.0.0"
+          image: "evilsnow/otus:1.0.1"
           ports:
             - containerPort: 8000
           livenessProbe:
